@@ -32,11 +32,11 @@
 
 | Field | Your Answer |
 |-------|-------------|
-| **Full Name** | [Write your full name here] |
-| **Student ID** | [Write your student ID here] |
-| **University Email** | [yourid]@std.psau.edu.sa |
-| **GitHub Username** | [your-github-username] |
-| **Repository Link** | [Paste your repository link here] |
+| **Full Name** | Joud Alhassan |
+| **Student ID** | 444051250 |
+| **University Email** | 444051250@std.psau.edu.sa |
+| **GitHub Username** | 444051250-ops |
+| **Repository Link** | https://github.com/444051250-ops/OS-Assignment3-Joud-Alhassan |
  
 ---
 
@@ -132,16 +132,27 @@
 
 ## Your Development Log
 
-### Entry 1 - [Date and Time]
+### Entry 1 - [November 8,2026, 7:45PM]
 **What I did**:
+Forked the repo, set my student ID, ran the starter, and did Feature 1
 
 **Details**:
+- Forked the starter repository and renamed it and checked it is public
+- Changed the student ID on line 304 to 444051250 and committed it
+- Ran the original code and all 3 CPUs crashed in snapshot() and all counters were 0
+- Added a ReentrantLock queueLock in ReadyQueue and protected add(), poll(), processOf() and snapshot() with lock/try/finally
+- Ran the code 5 times with no crash
 
 **Challenges**:
+The program crashed and I did not understand why
+when I edited the code I deleted some import lines by mistake and got many red errors
 
 **Solution**:
+Understood that 3 CPUs were using the same list at the same time without any lock so the list broke
+I added the missing imports back
 
 **Time spent**:
+1 hour
 
 ---
 
