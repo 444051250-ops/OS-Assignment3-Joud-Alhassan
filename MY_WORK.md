@@ -156,16 +156,23 @@ I added the missing imports back
 
 ---
 
-### Entry 2 - [Date and Time]
+### Entry 2 - [November 10,2026, 9:20 AM]
 **What I did**:
+Feature 2 locks on the shared statistics
 
 **Details**:
+- Added three ReentrantLocks in SharedStats: switchLock and completedLock and serviceLock 
+- Protected the 3 update methods and the 3 getters with lock/try/finally
+- Busy-waiting polls was still not 0 (28), this is for Feature 3
 
 **Challenges**:
+Deciding between one lock for all counters or one lock for each counter
 
 **Solution**:
+Chose one lock per counter because the three counters are independent so a CPU updating one counter does not need to block another CPU updating a different one
 
 **Time spent**:
+40 minutes
 
 ---
 
