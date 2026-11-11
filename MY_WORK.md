@@ -176,16 +176,25 @@ Chose one lock per counter because the three counters are independent so a CPU u
 
 ---
 
-### Entry 3 - [Date and Time]
+### Entry 3 - [November 11, 2026, 10:15 PM]
 **What I did**:
+Feature 3 replaced busy waiting with a counting semaphore
 
 **Details**:
+- Added a Semaphore readyCount in ReadyQueue with initial value 0 because the queue is empty at the start
+- Called release() in add() so the semaphore counts the processes waiting in the queue
+- In CpuWorker the CPU now calls acquire() and sleeps until a process is available and I removed the Thread.sleep(20) polling code
+- The CPU that finishes the last process calls release(totalCPUs) to wake up the other CPUs so they can stop
+- Ran the code 5 times and all 4 lines are correct and busy-waiting polls is 0 and the program stops by itself
 
 **Challenges**:
+Understanding how the CPUs stop at the end because after the last process they stay blocked on acquire() forever
 
 **Solution**:
+The CPU that finishes the last process wakes up all the others and each CPU checks if all processes are completed after it wakes up then it stops
 
 **Time spent**:
+1 hour
 
 ---
 
