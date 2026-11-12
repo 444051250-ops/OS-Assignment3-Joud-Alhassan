@@ -198,16 +198,25 @@ The CPU that finishes the last process wakes up all the others and each CPU chec
 
 ---
 
-### Entry 4 - [Date and Time]
+### Entry 4 - [November 12, 2026, 5:30 PM]
 **What I did**:
+Wrote the 4 technical answers in Part C
 
 **Details**:
+- Pasted the verification block of my original starter (crash, all counters 0) and of my final version (all lines correct)
+- Used my run after Feature 1 (22 instead of 24, 70232 instead of 78232) to explain a lost update step by step
+- Filled the critical sections table and explained my lock granularity choice
+- Explained the semaphore initial value (0, then 12 after the initial add calls) and the release(totalCPUs) shutdown
+- Answered the producer-consumer and deadlock question
 
 **Challenges**:
+My original starter crashed before the counters were updated so I could not show a lost update from it directly
 
 **Solution**:
+Used the output of my run after Feature 1 where the queue was fixed but the counters were still not protected
 
 **Time spent**:
+1 hour 30 minutes
 
 ---
 
