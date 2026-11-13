@@ -220,16 +220,24 @@ Used the output of my run after Feature 1 where the queue was fixed but the coun
 
 ---
 
-### Entry 5 - [Date and Time]
+### Entry 5 - [November 13, 2026, 6:00 PM]
 **What I did**:
+Wrote the reflection, the summaries, recorded the video and did the final check
 
 **Details**:
+- Answered the 4 reflection questions in Part B
+- Filled the development log summary and the Part C summary
+- Ran the final code again 5 times all 4 verification lines are correct and the program stops by itself
+- Recorded the demo video in VS Code, uploaded it and added the link
 
 **Challenges**:
+Keeping the video between 2 and 3 minutes while showing all the required parts
 
 **Solution**:
+Prepared what to say for each part and practiced it before recording
 
 **Time spent**:
+1 hour 30 minutes
 
 ---
 
@@ -250,13 +258,13 @@ Used the output of my run after Feature 1 where the queue was fixed but the coun
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [X hours]
+**Total time spent on assignment**: About 6 hours
 
-**Most challenging part**:
+**Most challenging part**: The shutdown in Feature 3 making the CPUs blocked on acquire() stop at the end
 
-**Most interesting learning**:
+**Most interesting learning**: Seeing a real lost update in my own output and understanding exactly why it happened
 
-**What I would do differently next time**:
+**What I would do differently next time**: Start earlier and save the output of each step from the beginning
 
 ---
 
@@ -276,7 +284,7 @@ Used the output of my run after Feature 1 where the queue was fixed but the coun
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I learned that shared data changes everything. A simple update like count = count + 1 is really a read, a modify and a write, and if two CPUs do it at the same time one update is lost; I saw this myself when I got 22 context switches instead of 24. I learned that the code that touches shared data is a critical section, and that a ReentrantLock gives mutual exclusion so only one thread can be inside it. I also learned that the unlock must always be in a finally block, otherwise one error could keep the lock forever and block all the other CPUs. With the counting semaphore, I learned that a thread can sleep until a resource is available instead of checking again and again, which is much better than busy waiting. What surprised me most was that the original starter crashed in the first second, only because three threads touched the same list without a lock.
 
 ## Question 2: What was the most challenging part of this assignment?
 
@@ -284,7 +292,7 @@ Used the output of my run after Feature 1 where the queue was fixed but the coun
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+The most challenging part for me was Feature 3 especially the shutdown of the CPUs at the end. Using acquire() and release() was not very hard once I understood that the semaphore counts the processes in the queue. The hard part was understanding that after the last process finishes, the other CPUs are still sleeping inside acquire() and nobody will ever add a process again. I did not see this problem at first because the program looked correct until the very end. It was hard because it is a waiting problem, not a calculation problem and nothing prints an error when a thread waits forever. I understood it only when I learned that the watchdog would stop the program if a CPU stayed blocked.
 
 ## Question 3: How did you overcome the challenges you faced?
 
@@ -292,7 +300,11 @@ Used the output of my run after Feature 1 where the queue was fixed but the coun
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I worked on one feature at a time and tested after each small change, in the order given in the README. After each feature i ran the program at least 5 times because i noticed that the results were different between runs (for example 22 then 23 context switches)
+so one run was not enough. i saved the output of the starter and of each step in a text file so i could compare the verification blocks and see exactly what each feature fixed.
+When i had red errors in VS Code after editing i checked the lines carefully and found that i had deleted some import lines by mistake.
+When i was stuck on a concept like the semaphore initial value or the shutdown i asked for help and explanations, then went back to my own code to check that i understood it.
+I also committed after each feature so I always had a working version to go back to.
 
 ## Question 4: Where can synchronization concepts be applied in real-world applications?
 
@@ -300,7 +312,9 @@ Used the output of my run after Feature 1 where the queue was fixed but the coun
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+Synchronization is used in banking: if two people withdraw from the same account at the same time without a lock one withdrawal can be lost, exactly like my lost update on totalServiceTime.
+Ticket and seat booking systems need a critical section so that two users cannot book the same seat like two CPUs that must not take the same process in poll(). A print queue in an office is a producer-consumer problem: computers add documents and the printer takes them, and a semaphore lets the printer sleep when the queue is empty instead of busy waiting.
+Websites that count views or likes use a shared counter that must be protected like my contextSwitchCount. Databases use locks so that transactions do not corrupt the data when many users update it at the same time. Even the operating system itself uses these tools to share the CPU, memory and devices between processes.
 
 ### Optional: What would you like to learn more about?
 
@@ -390,7 +404,6 @@ I protected the ready queue (list and map) with one lock queueLock in add(), pol
 | `contextSwitchCount` (increment + getter) | `switchLock` | Read-modify-write lost updates (22 instead of 24) |
 | `completedProcessCount` (increment + getter) | `completedLock` | A lost update means the CPUs never see 12 completed |
 | `totalServiceTime` (add + getter) | `serviceLock` | Read-modify-write lost updates (70232 instead of 78232) |
-| [...] | [...] | [...] |
 
 ## Question 3: Busy Waiting vs Semaphore
 
@@ -426,13 +439,13 @@ Suppose the queue is full and a CPU wants to re-enqueue a process if it calls wa
 ## Summary
 
 **Key concepts I understood through these questions:**
-1.
-2.
-3.
+1. A race condition is a lost update caused by a read-modify-write that is not protected
+2. A counting semaphore can replace busy waiting by blocking threads until a resource is available
+3. Holding a lock while waiting for a semaphore can cause a deadlock
 
 **Concepts I need to study more:**
-1.
-2.
+1. The four necessary conditions for deadlock and how to prevent each one
+2. Fairness and starvation with locks
 
 ---
 
